@@ -2,12 +2,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 
 /*
 This NPC brain is based on one-to-many way, which means that players set themself as target once they enter in NPC action radius
 */
 
-public class NPC : Photon.MonoBehaviour
+public class NPC : NetworkBehaviour
 {
     public int Id;
     public bool debug = false;
@@ -81,11 +82,12 @@ public class NPC : Photon.MonoBehaviour
     public bool isInInteractionRange
     {
         get {
-            if (Vector3.Distance(transform.position, Player.Instance.transform.position) >= maxInteractionRange) {
-                return false;
-            } else {
-                return true;
-            }
+            //if (Vector3.Distance(transform.position, Player.Instance.transform.position) >= maxInteractionRange) {
+            //    return false;
+            //} else {
+            //    return true;
+            //}
+            return false;
         }
     }
 
@@ -163,35 +165,35 @@ public class NPC : Photon.MonoBehaviour
 	{
         if (isDead)
         {
-            if (!killNotiSent && photonView.isMine)
-            {
-                namePlate.health.fillAmount = 0;
+            //if (!killNotiSent && photonView.isMine)
+            //{
+            //    namePlate.health.fillAmount = 0;
 
-                foreach (KeyValuePair<Player, int> entry in attackers) {
-                    entry.Key.photonView.RPC("addKill", entry.Key.photonView.owner, data.id, Task.ActorType.NPC, data.level, entry.Value, data.health, data.expValue, data.template);
-                }
-                this.changeAnimation(AnimationStates.DEATH);
-                NPCManager.Instance.prepareRespawn(this);
-                killNotiSent = true;
-            }
+            //    foreach (KeyValuePair<Player, int> entry in attackers) {
+            //        entry.Key.photonView.RPC("addKill", entry.Key.photonView.owner, data.id, Task.ActorType.NPC, data.level, entry.Value, data.health, data.expValue, data.template);
+            //    }
+            //    this.changeAnimation(AnimationStates.DEATH);
+            //    NPCManager.Instance.prepareRespawn(this);
+            //    killNotiSent = true;
+            //}
             return;
         }
 
         // static NPCs like vendors, dont have photonView as they dont perfom any action
-        if (!photonView) {
-            return;
-        }
+  //      if (!photonView) {
+  //          return;
+  //      }
 
-        if (!photonView.isMine && gotFirstUpdate) {
-			transform.position = Vector3.Lerp(transform.position, correctPlayerPos, Time.deltaTime * this.SmoothingDelay);
-			transform.rotation = Quaternion.Lerp(transform.rotation, correctPlayerRot, Time.deltaTime * this.SmoothingDelay);
-		}
+  //      if (!photonView.isMine && gotFirstUpdate) {
+		//	transform.position = Vector3.Lerp(transform.position, correctPlayerPos, Time.deltaTime * this.SmoothingDelay);
+		//	transform.rotation = Quaternion.Lerp(transform.rotation, correctPlayerRot, Time.deltaTime * this.SmoothingDelay);
+		//}
 
-        if (Application.isEditor) {
-			if (data.subRace != NPCData.creatureSubRace.Normal) {return;} // enable in debug to not verifiy if you are the master
-		} else {
-			if (data.subRace != NPCData.creatureSubRace.Normal || !photonView.isMine) {return;}
-		}
+  //      if (Application.isEditor) {
+		//	if (data.subRace != NPCData.creatureSubRace.Normal) {return;} // enable in debug to not verifiy if you are the master
+		//} else {
+		//	if (data.subRace != NPCData.creatureSubRace.Normal || !photonView.isMine) {return;}
+		//}
 
         // check if target has died
         if (target && target.GetComponent<Player>().isDead) {
@@ -252,7 +254,7 @@ public class NPC : Photon.MonoBehaviour
 				{
 					this.timeSinceLastAttack = 0.0f;
                     this.changeAnimation(AnimationStates.ATTACK);
-                    this.target.GetComponent<Player>().photonView.RPC("getDamage", this.target.GetComponent<Player>().photonView.owner, data.damage, photonView.viewID);
+                    //this.target.GetComponent<Player>().photonView.RPC("getDamage", this.target.GetComponent<Player>().photonView.owner, data.damage, photonView.viewID);
 				}
 				else
 				{
@@ -287,25 +289,25 @@ public class NPC : Photon.MonoBehaviour
         }
 	}
 	
-	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-	{
-		if (photonView.isMine) {
-			stream.SendNext(transform.position);
-			stream.SendNext(transform.rotation); 
-		}
-		else
-		{
-			//Network NPC, receive data
-			correctPlayerPos = (Vector3)stream.ReceiveNext();
-			correctPlayerRot = (Quaternion)stream.ReceiveNext();
+	//public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	//{
+	//	if (photonView.isMine) {
+	//		stream.SendNext(transform.position);
+	//		stream.SendNext(transform.rotation); 
+	//	}
+	//	else
+	//	{
+	//		//Network NPC, receive data
+	//		correctPlayerPos = (Vector3)stream.ReceiveNext();
+	//		correctPlayerRot = (Quaternion)stream.ReceiveNext();
 
-			if (!gotFirstUpdate) {
-				transform.position = correctPlayerPos;
-				transform.rotation = correctPlayerRot;
-				gotFirstUpdate = true;
-			}
-		}
-	}
+	//		if (!gotFirstUpdate) {
+	//			transform.position = correctPlayerPos;
+	//			transform.rotation = correctPlayerRot;
+	//			gotFirstUpdate = true;
+	//		}
+	//	}
+	//}
 
     /**
     * Toggles NPC status and disables some of its components to get better perfomance
@@ -413,7 +415,7 @@ public class NPC : Photon.MonoBehaviour
 		while (count < over) {
 			yield return new WaitForSeconds(time);
 			getHit(damage, player, true);
-			PhotonNetwork.Instantiate("Particles/" + dotEffect.name, transform.position, Quaternion.identity, 0);
+			//PhotonNetwork.Instantiate("Particles/" + dotEffect.name, transform.position, Quaternion.identity, 0);
 			count ++;
 		}
 		

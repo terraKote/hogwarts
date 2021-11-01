@@ -77,7 +77,7 @@ public class PlayerCombat : MonoBehaviour {
 			//Instantiated object will move straight forward.
 			if(spell.spellDirection == Spell.SpellDirection.Directional)
 			{
-				spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name, transform.position + transform.up, transform.rotation, 0);
+				//spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name, transform.position + transform.up, transform.rotation, 0);
 				spellObject.name = spell.spellName;
 				
 			}
@@ -85,7 +85,7 @@ public class PlayerCombat : MonoBehaviour {
 			//Instantiated object will follow target.
 			if(spell.spellDirection == Spell.SpellDirection.Follow)
 			{
-				spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position + transform.up, Quaternion.identity, 0);
+				//spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position + transform.up, Quaternion.identity, 0);
 				spellObject.name = spell.spellName;
 				spellObject.GetComponent<SpellObjectConfigurator>().myTarget = Player.Instance.target.transform;
 			}
@@ -93,7 +93,7 @@ public class PlayerCombat : MonoBehaviour {
 			//Instantiating to target's position.
 			if(spell.spellDirection == Spell.SpellDirection.Point)
 			{
-				spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,Player.Instance.target.transform.position,Quaternion.identity, 0);
+				//spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,Player.Instance.target.transform.position,Quaternion.identity, 0);
 				spellObject.name = spell.spellName;
 				spellObject.GetComponent<SpellObjectConfigurator>().myTarget = Player.Instance.target.transform;
 			}
@@ -104,13 +104,16 @@ public class PlayerCombat : MonoBehaviour {
 		//********************************AOE*********************************************
 		else if(spell.spellType == Spell.SpellType.Aoe)
 		{
-			if(spell.spellPosition == Spell.SpellPosition.TargetTransform)
-				spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,Player.Instance.target.transform.position,Quaternion.identity, 0);
+			if (spell.spellPosition == Spell.SpellPosition.TargetTransform)
+			{
+				//spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,Player.Instance.target.transform.position,Quaternion.identity, 0);
+			}
 			else
-				spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position,Quaternion.identity, 0);
-			
-			spellObject.name = spell.spellName;
-			
+			{
+				//spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position,Quaternion.identity, 0);
+
+				spellObject.name = spell.spellName;
+			}
 			
 		}
 		
@@ -120,14 +123,14 @@ public class PlayerCombat : MonoBehaviour {
 			//Spell type is a buff.And we are checking what type of buff spell is used.
 			if(spell.buffType == Spell.BuffType.Heal)
 			{
-				spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position,Quaternion.identity, 0);
+				//spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position,Quaternion.identity, 0);
 				spellObject.name = spell.spellName;
 				//currentHealth += (Random.Range(spell.minBuffAmount,spell.maxBuffAmount));	
 				
 			}
 			else if(spell.buffType == Spell.BuffType.MagicalDefense)
 			{
-				spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position,Quaternion.identity, 0);
+				//spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position,Quaternion.identity, 0);
 				spellObject.name = spell.spellName;
 				//magicalDefense += (Random.Range(spell.minBuffAmount,spell.maxBuffAmount));	
 				
@@ -135,7 +138,7 @@ public class PlayerCombat : MonoBehaviour {
 			else
 			{
 				//Physical Defense
-				spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position,Quaternion.identity, 0);
+				//spellObject = (GameObject)PhotonNetwork.Instantiate("Particles/" + spell.spellPrefab.name,transform.position,Quaternion.identity, 0);
 				spellObject.name = spell.spellName;
 				//physicalDefense += (Random.Range(spell.minBuffAmount,spell.maxBuffAmount));	
 			}

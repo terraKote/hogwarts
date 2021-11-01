@@ -15,9 +15,9 @@ public class NPCActivator : MonoBehaviour
         }
 
         // get the ownership so NPC can move
-        if (col.gameObject.GetComponent<PhotonView>().owner == null) {
-            col.gameObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player);
-        }
+        //if (col.gameObject.GetComponent<PhotonView>().owner == null) {
+        //    col.gameObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.player);
+        //}
 
         col.gameObject.GetComponent<NPC>().setEnabled(true);
     }
@@ -28,9 +28,9 @@ public class NPCActivator : MonoBehaviour
             return;
         }
 
-        if (col.gameObject.GetComponent<PhotonView>().isMine) {
-            col.gameObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.masterClient);
-        }
+        //if (col.gameObject.GetComponent<PhotonView>().isMine) {
+        //    col.gameObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.masterClient);
+        //}
 
         col.gameObject.GetComponent<NPC>().setEnabled(false);
     }

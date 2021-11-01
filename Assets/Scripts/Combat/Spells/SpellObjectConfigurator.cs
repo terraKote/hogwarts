@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Mirror;
 
-public class SpellObjectConfigurator : Photon.MonoBehaviour {
+public class SpellObjectConfigurator : NetworkBehaviour {
 	
 	private Transform myTransform = null;
 	public Spell spell = null;
@@ -9,9 +10,9 @@ public class SpellObjectConfigurator : Photon.MonoBehaviour {
 	
 	void Start()
 	{
-		if (!photonView.isMine) {
-			return;
-		}
+		//if (!photonView.isMine) {
+		//	return;
+		//}
 		myTransform = transform;
 		spell = (Spell)Resources.Load("Spells/" + myTransform.gameObject.name, typeof(Spell));
 
@@ -25,18 +26,18 @@ public class SpellObjectConfigurator : Photon.MonoBehaviour {
 
 					if(spell.spellFlag == Spell.SpellFlag.DamagePerSecond) {
 
-						myTarget.gameObject.GetComponent<NPC>().getHit(Random.Range(spell.spellMinDamage, spell.spellMaxDamage), Player.Instance.gameObject);
+						//myTarget.gameObject.GetComponent<NPC>().getHit(Random.Range(spell.spellMinDamage, spell.spellMaxDamage), Player.Instance.gameObject);
 
-						if(npc && npc.check == false)
-							npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
-						else{
-							npc.resetDps = true;
-							npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
-						}
+						//if(npc && npc.check == false)
+						//	npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
+						//else{
+						//	npc.resetDps = true;
+						//	npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
+						//}
 					}
 					else
 					{
-						npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
+						//npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
 					}
 				}
 			}
@@ -50,12 +51,12 @@ public class SpellObjectConfigurator : Photon.MonoBehaviour {
 				for(int i = 0; i < hitColliders.Length;i++)
 				{
 					if(hitColliders[i].tag == "NPC"){
-						PhotonNetwork.Instantiate("Particles/" + spell.spellCollisionParticle.name, hitColliders[i].transform.position, Quaternion.identity, 0);
+						//PhotonNetwork.Instantiate("Particles/" + spell.spellCollisionParticle.name, hitColliders[i].transform.position, Quaternion.identity, 0);
 
 						//You can implement a your own damage script.This is an example.(col) means a player.
 						//PlayerDamageScript pds = col.gameObject.GetComponent<PlayerDamageScript>();
 						//pds.TakeDamage(); or pds.health -= damage;
-						hitColliders[i].gameObject.GetComponent<NPC>().getHit(Random.Range(spell.spellMinDamage,spell.spellMaxDamage), Player.Instance.gameObject);
+						//hitColliders[i].gameObject.GetComponent<NPC>().getHit(Random.Range(spell.spellMinDamage,spell.spellMaxDamage), Player.Instance.gameObject);
 
 
 					}
@@ -69,12 +70,12 @@ public class SpellObjectConfigurator : Photon.MonoBehaviour {
 						if(hitColliders[i].tag == "NPC"){
 							NPC npc = hitColliders[i].gameObject.GetComponent<NPC>();
 							
-							if(npc && npc.check == false)
-								npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
-							else{
-								npc.resetDps = true;
-								npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
-							}
+							//if(npc && npc.check == false)
+							//	npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
+							//else{
+							//	npc.resetDps = true;
+							//	npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
+							//}
 						}
 					}
 
@@ -87,7 +88,7 @@ public class SpellObjectConfigurator : Photon.MonoBehaviour {
 						if(hitColliders[i].tag == "NPC"){
 							NPC npc = hitColliders[i].gameObject.GetComponent<NPC>();
 
-							npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
+							//npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
 						}
 
 					}
@@ -101,9 +102,9 @@ public class SpellObjectConfigurator : Photon.MonoBehaviour {
 	
 	void Update()
 	{
-		if (!photonView.isMine) {
-			return;
-		}
+		//if (!photonView.isMine) {
+		//	return;
+		//}
 
 		if(spell != null){
 			if(spell.spellType == Spell.SpellType.Single)
@@ -140,42 +141,42 @@ public class SpellObjectConfigurator : Photon.MonoBehaviour {
 	
 	void OnCollisionEnter(Collision col)
 	{
-		if (!photonView.isMine) {
-			return;
-		}
+		//if (!photonView.isMine) {
+		//	return;
+		//}
 
 		if(col.gameObject.tag == "NPC")
 		{
 
 			ContactPoint cp = col.contacts[0];
 
-			PhotonNetwork.Instantiate("Particles/" + spell.spellCollisionParticle.name, cp.point, Quaternion.identity, 0);
+			//PhotonNetwork.Instantiate("Particles/" + spell.spellCollisionParticle.name, cp.point, Quaternion.identity, 0);
 			
 			NPC npc = col.gameObject.GetComponent<NPC>();
 
 			if(spell.spellFlag == Spell.SpellFlag.DamagePerSecond){
 
-				myTarget.gameObject.GetComponent<NPC>().getHit(Random.Range(spell.spellMinDamage, spell.spellMaxDamage), Player.Instance.gameObject);
+				//myTarget.gameObject.GetComponent<NPC>().getHit(Random.Range(spell.spellMinDamage, spell.spellMaxDamage), Player.Instance.gameObject);
 
-				//This is for dot only.
-				if(npc && npc.check == false)
-					npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
-				else{
-					npc.resetDps = true;
-					npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
-				}
+				////This is for dot only.
+				//if(npc && npc.check == false)
+				//	npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
+				//else{
+				//	npc.resetDps = true;
+				//	npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
+				//}
 			}
 			else
 			{
-				if(npc)
-					npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
-				else
-					Debug.LogWarning("The DamageByFlag script not found in" + " " + col.gameObject.name + ".Please assign the DamageByFlag script.");
+			//	if(npc)
+			//		npc.StartCoroutine(npc.TakeDamageByFlagType(spell, Player.Instance.gameObject));
+			//	else
+			//		Debug.LogWarning("The DamageByFlag script not found in" + " " + col.gameObject.name + ".Please assign the DamageByFlag script.");
 			}
 
-			col.gameObject.GetComponent<NPC>().getHit(Random.Range(spell.spellMinDamage,spell.spellMaxDamage), Player.Instance.gameObject);
+			//col.gameObject.GetComponent<NPC>().getHit(Random.Range(spell.spellMinDamage,spell.spellMaxDamage), Player.Instance.gameObject);
 
-			PhotonNetwork.Destroy(this.gameObject);
+			//PhotonNetwork.Destroy(this.gameObject);
 		}
 	}
 	

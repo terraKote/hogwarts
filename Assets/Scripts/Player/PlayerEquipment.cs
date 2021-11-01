@@ -33,29 +33,29 @@ public class PlayerEquipment : MonoBehaviour {
 		GameObject obj;
 		Dictionary<int, bool> loadedPositions = new Dictionary<int, bool>();
 
-		foreach (CharacterItem characterItem in Service.db.Select<CharacterItem>("FROM inventory WHERE _position != ? & character == ?", 0, PhotonNetwork.player.CustomProperties["characterId"])) {
-			item = new Item().get(characterItem);
-			obj = getGameObject(characterItem._position);
-			loadedPositions[characterItem._position] = true;
+		//foreach (CharacterItem characterItem in Service.db.Select<CharacterItem>("FROM inventory WHERE _position != ? & character == ?", 0, PhotonNetwork.player.CustomProperties["characterId"])) {
+		//	item = new Item().get(characterItem);
+		//	obj = getGameObject(characterItem._position);
+		//	loadedPositions[characterItem._position] = true;
 
-			if (!equipedItems.ContainsKey(characterItem._position)) {
-				equipedItems[characterItem._position] = item;
+		//	if (!equipedItems.ContainsKey(characterItem._position)) {
+		//		equipedItems[characterItem._position] = item;
 
-				setItem(obj, item);
-			} else {
+		//		setItem(obj, item);
+		//	} else {
 
-				// check if user has changed its equipment
-				if (equipedItems[characterItem._position].id != item.id) {
-					equipedItems[characterItem._position] = item;
+		//		// check if user has changed its equipment
+		//		if (equipedItems[characterItem._position].id != item.id) {
+		//			equipedItems[characterItem._position] = item;
 
-					// destroy current model
-					unsetItem(obj);
+		//			// destroy current model
+		//			unsetItem(obj);
 
-					setItem(obj, item);
-				}
-			}
+		//			setItem(obj, item);
+		//		}
+		//	}
 
-		}
+		//}
 
 		// if player has unequiped something, delete its view
 		foreach (int pos in Enum.GetValues(typeof(CharacterItem.equipmentPosition))) {

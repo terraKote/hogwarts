@@ -36,7 +36,7 @@ public class ConfigMenu : MonoBehaviour {
 	}
 
 	public void ConfigDisconnect(){
-		PhotonNetwork.Disconnect ();
+		//PhotonNetwork.Disconnect ();
 		SceneManager.LoadScene("MainMenu");
 	}
 

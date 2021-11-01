@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-using Hashtable = ExitGames.Client.Photon.Hashtable;
+//using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class MainPanel : MonoBehaviour {
     public Text nickLabel;
@@ -60,8 +60,8 @@ public class MainPanel : MonoBehaviour {
         Hashtable h = new Hashtable(1);
 		h.Add("characterId", characterId);
 
-		PhotonNetwork.player.SetCustomProperties(h);
-		PhotonNetwork.player.NickName = name;
+		//PhotonNetwork.player.SetCustomProperties(h);
+		//PhotonNetwork.player.NickName = name;
 		
 		NetworkManager.Instance.startConnection();
 		GameObject.Find ("Canvas/MainPanel/LoginOptions/JoinButton/Text").GetComponent<Text> ().text = LanguageManager.get("CONNECTING") + "...";

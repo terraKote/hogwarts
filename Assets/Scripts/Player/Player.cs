@@ -3,8 +3,9 @@ using System;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEditor;
+using Mirror;
 
-public class Player : Photon.MonoBehaviour {
+public class Player : NetworkBehaviour {
 
     const int XP_BASE = 400;
     const int HEALTH_REGEN_BASE = 5;
@@ -28,16 +29,16 @@ public class Player : Photon.MonoBehaviour {
             // We dont check if health > maxHealth here, because player may have some temporal buff
             characterData.health = value;
 
-            if (photonView.isMine)
-            {
-                characterData.save();
-                PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Health, characterData.health, characterData.maxHealth);
-                startHealthRegeneration();
+            //if (photonView.isMine)
+            //{
+            //    characterData.save();
+            //    PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Health, characterData.health, characterData.maxHealth);
+            //    startHealthRegeneration();
 
-                if (hasResurrected) {
-                    startManaRegeneration();
-                }
-            }
+            //    if (hasResurrected) {
+            //        startManaRegeneration();
+            //    }
+            //}
         }
     }
 
@@ -64,18 +65,18 @@ public class Player : Photon.MonoBehaviour {
 
             characterData.exp = value;
 
-            if (photonView.isMine)
-            {
-                int nextLevelExp = XP_BASE * level;
+            //if (photonView.isMine)
+            //{
+            //    int nextLevelExp = XP_BASE * level;
 
-                if (exp >= nextLevelExp) {
-                    characterData.exp = exp - nextLevelExp;
-                    level += 1;
-                }
-                characterData.save();
-                PlayerPanel.Instance.showWonXP(value);
-                PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Exp, characterData.exp, XP_BASE * level);
-            }
+            //    if (exp >= nextLevelExp) {
+            //        characterData.exp = exp - nextLevelExp;
+            //        level += 1;
+            //    }
+            //    characterData.save();
+            //    PlayerPanel.Instance.showWonXP(value);
+            //    PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Exp, characterData.exp, XP_BASE * level);
+            //}
         }
     }
 
@@ -91,11 +92,11 @@ public class Player : Photon.MonoBehaviour {
             // We dont check if mana > maxMana here, because player may have some temporal buff
             characterData.mana = value;
 
-            if (photonView.isMine) {
-                characterData.save();
-                PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Mana, characterData.mana, characterData.maxMana);
-                startManaRegeneration();
-            }
+            //if (photonView.isMine) {
+            //    characterData.save();
+            //    PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Mana, characterData.mana, characterData.maxMana);
+            //    startManaRegeneration();
+            //}
         }
     }
 
@@ -108,12 +109,12 @@ public class Player : Photon.MonoBehaviour {
 
             characterData.money = value;
 
-            if (photonView.isMine) {
-                characterData.save();
-                try {
-                    Inventory.Instance.updateMoney();
-                } catch (Exception) { }
-            }
+            //if (photonView.isMine) {
+            //    characterData.save();
+            //    try {
+            //        Inventory.Instance.updateMoney();
+            //    } catch (Exception) { }
+            //}
         }
     }
 
@@ -126,16 +127,17 @@ public class Player : Photon.MonoBehaviour {
 
             characterData.level = value;
 
-            if (photonView.isMine) {
-                characterData.save();
-                SkillsUI.Instance.displayUnlockedSkills();
-            }
+            //if (photonView.isMine) {
+            //    characterData.save();
+            //    SkillsUI.Instance.displayUnlockedSkills();
+            //}
         }
     }
 
     public bool isMine {
         get {
-            return photonView.isMine;
+            //return photonView.isMine;
+            return false;
         }
     }
 
@@ -147,7 +149,8 @@ public class Player : Photon.MonoBehaviour {
 
     public int id {
         get {
-            return photonView.ownerId;
+            //return photonView.ownerId;
+            return 0;
         }
     }
 
@@ -221,52 +224,52 @@ public class Player : Photon.MonoBehaviour {
 
 
     void Start() {
-        if (photonView.isMine)
-        {
-            _instance = this;
-            SkillsUI.Instance.displayUnlockedSkills();
-            startHealthRegeneration();
-            startManaRegeneration();
-			Destroy (trailRenderer);
-        } else {
-			Chat.Instance.LocalMsg("<color=\"#e8bf00\">[Sistema]</color> " + photonView.owner.NickName + " entró");
-            Destroy(GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>());
-            Destroy(GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>());
-            Destroy(GetComponent<Rigidbody>());
-			Destroy(GetComponent<NPCActivator>());
-            Destroy(gameObject.transform.Find("NPCActivator").gameObject);
-        }
+   //     if (photonView.isMine)
+   //     {
+   //         _instance = this;
+   //         SkillsUI.Instance.displayUnlockedSkills();
+   //         startHealthRegeneration();
+   //         startManaRegeneration();
+			//Destroy (trailRenderer);
+   //     } else {
+			//Chat.Instance.LocalMsg("<color=\"#e8bf00\">[Sistema]</color> " + photonView.owner.NickName + " entró");
+   //         Destroy(GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>());
+   //         Destroy(GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>());
+   //         Destroy(GetComponent<Rigidbody>());
+			//Destroy(GetComponent<NPCActivator>());
+   //         Destroy(gameObject.transform.Find("NPCActivator").gameObject);
+   //     }
     }
 
     void Update()
     {
-        if (!photonView.isMine) {
-            transform.position = Vector3.Lerp(transform.position, this.correctPlayerPos, Time.deltaTime * 5);
-            transform.rotation = Quaternion.Lerp(transform.rotation, this.correctPlayerRot, Time.deltaTime * 5);
-        } else {
-            if (!gotFirstUpdate) {
+        //if (!photonView.isMine) {
+        //    transform.position = Vector3.Lerp(transform.position, this.correctPlayerPos, Time.deltaTime * 5);
+        //    transform.rotation = Quaternion.Lerp(transform.rotation, this.correctPlayerRot, Time.deltaTime * 5);
+        //} else {
+        //    if (!gotFirstUpdate) {
 
-                photonView.RPC("setNick", PhotonTargets.OthersBuffered, PhotonNetwork.player.NickName);
+        //        photonView.RPC("setNick", PhotonTargets.OthersBuffered, PhotonNetwork.player.NickName);
 
-                healthBar = GameObject.Find("Canvas/PlayerPanel/HP Orb Bg/HP").GetComponent<Image>();
+        //        healthBar = GameObject.Find("Canvas/PlayerPanel/HP Orb Bg/HP").GetComponent<Image>();
 
-                PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Health, characterData.health, characterData.maxHealth);
-                PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Exp, characterData.exp, XP_BASE * level);
-                PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Mana, characterData.mana, characterData.maxMana);
+        //        PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Health, characterData.health, characterData.maxHealth);
+        //        PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Exp, characterData.exp, XP_BASE * level);
+        //        PlayerPanel.Instance.updateBar(PlayerPanel.BarType.Mana, characterData.mana, characterData.maxMana);
 
-                gotFirstUpdate = true;
-            }
+        //        gotFirstUpdate = true;
+        //    }
 
-            if (healthBar.fillAmount != health) {
-                healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, health / 270f, 4f * Time.deltaTime);
-                namePlate.health.fillAmount = Mathf.Lerp(namePlate.health.fillAmount, health / 270f, 4f * Time.deltaTime);
-            }
+        //    if (healthBar.fillAmount != health) {
+        //        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, health / 270f, 4f * Time.deltaTime);
+        //        namePlate.health.fillAmount = Mathf.Lerp(namePlate.health.fillAmount, health / 270f, 4f * Time.deltaTime);
+        //    }
 
-            //looks like player is falling
-            if (transform.position.y < -100) {
-                Respawn();
-            }
-        }
+        //    //looks like player is falling
+        //    if (transform.position.y < -100) {
+        //        Respawn();
+        //    }
+        //}
     }
 
     void LateUpdate()
@@ -356,55 +359,55 @@ public class Player : Photon.MonoBehaviour {
 
 	private bool broom;
 
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.isWriting)
-        {
-            // We own this player: send the others our data
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
-            stream.SendNext(anim.GetFloat("Forward"));
-            stream.SendNext(anim.GetFloat("Turn"));
-            stream.SendNext(anim.GetFloat("Jump"));
-            stream.SendNext(anim.GetBool("OnGround"));
-            stream.SendNext(anim.GetBool("InvokeSpell"));
-            stream.SendNext(anim.GetInteger("SpellType"));
-			stream.SendNext(anim.GetBool("Broomstick"));
-        }
-        else
-        {
-            // Network player, receive data
-            this.correctPlayerPos = (Vector3)stream.ReceiveNext();
-            this.correctPlayerRot = (Quaternion)stream.ReceiveNext();
+   // void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+   // {
+   //     if (stream.isWriting)
+   //     {
+   //         // We own this player: send the others our data
+   //         stream.SendNext(transform.position);
+   //         stream.SendNext(transform.rotation);
+   //         stream.SendNext(anim.GetFloat("Forward"));
+   //         stream.SendNext(anim.GetFloat("Turn"));
+   //         stream.SendNext(anim.GetFloat("Jump"));
+   //         stream.SendNext(anim.GetBool("OnGround"));
+   //         stream.SendNext(anim.GetBool("InvokeSpell"));
+   //         stream.SendNext(anim.GetInteger("SpellType"));
+			//stream.SendNext(anim.GetBool("Broomstick"));
+   //     }
+   //     else
+   //     {
+   //         // Network player, receive data
+   //         this.correctPlayerPos = (Vector3)stream.ReceiveNext();
+   //         this.correctPlayerRot = (Quaternion)stream.ReceiveNext();
 
-            if (anim) {
-                anim.SetFloat("Forward", (float)stream.ReceiveNext());
-                anim.SetFloat("Turn", (float)stream.ReceiveNext());
-                anim.SetFloat("Jump", (float)stream.ReceiveNext());
-                anim.SetBool("OnGround", (bool)stream.ReceiveNext());
-                anim.SetBool("InvokeSpell", (bool)stream.ReceiveNext());
-                anim.SetInteger("SpellType", (int)stream.ReceiveNext());
-				broom = (bool)stream.ReceiveNext();
-				anim.SetBool ("Broomstick", broom);
-            }
+   //         if (anim) {
+   //             anim.SetFloat("Forward", (float)stream.ReceiveNext());
+   //             anim.SetFloat("Turn", (float)stream.ReceiveNext());
+   //             anim.SetFloat("Jump", (float)stream.ReceiveNext());
+   //             anim.SetBool("OnGround", (bool)stream.ReceiveNext());
+   //             anim.SetBool("InvokeSpell", (bool)stream.ReceiveNext());
+   //             anim.SetInteger("SpellType", (int)stream.ReceiveNext());
+			//	broom = (bool)stream.ReceiveNext();
+			//	anim.SetBool ("Broomstick", broom);
+   //         }
 
-			if (broom) {
-				gameObject.GetComponent<PlayerHotkeys> ().broom.SetActive (true);
-			} else {
-				gameObject.GetComponent<PlayerHotkeys> ().broom.SetActive (false);
-			}
+			//if (broom) {
+			//	gameObject.GetComponent<PlayerHotkeys> ().broom.SetActive (true);
+			//} else {
+			//	gameObject.GetComponent<PlayerHotkeys> ().broom.SetActive (false);
+			//}
 
 
-            if (gotFirstUpdate == false) {
-                transform.position = this.correctPlayerPos;
-                transform.rotation = this.correctPlayerRot;
-                gotFirstUpdate = true;
-            }
+   //         if (gotFirstUpdate == false) {
+   //             transform.position = this.correctPlayerPos;
+   //             transform.rotation = this.correctPlayerRot;
+   //             gotFirstUpdate = true;
+   //         }
 
-        }
-    }
+   //     }
+   // }
 
-    [PunRPC]
+    //[PunRPC]
     void setNick(string nickName) {
         //name = nickName;
         namePlate.setName(nickName, NamePlate.COLOR_NORMAL);
@@ -469,19 +472,19 @@ public class Player : Photon.MonoBehaviour {
         transform.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().enabled = true;
     }
 
-    [PunRPC]
+    //[PunRPC]
     public void getDamage(int amount, int attacker) {
         isInCombat = true;
         health -= amount;
         anim.Play("GettingHit");
 
         if (target == null) {
-            PhotonView.Find(attacker).gameObject.GetComponent<NPC>().setSelected();
+            //PhotonView.Find(attacker).gameObject.GetComponent<NPC>().setSelected();
         }
     }
 
     // Has killed someone/NPC or made an assistance
-    [PunRPC]
+    //[PunRPC]
     public void addKill(int id, Task.ActorType type, int level, int damage, int totalHealth, int expValue, int templateId = 0)
     {
         int wonExp = 0;

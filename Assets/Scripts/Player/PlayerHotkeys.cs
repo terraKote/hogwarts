@@ -33,7 +33,7 @@ public class PlayerHotkeys : MonoBehaviour
         }
         // Display/hide the UI
         if (Input.GetKeyDown(KeyCode.Z)) {
-            Menu.Instance.gameObject.SetActive(!Menu.Instance.gameObject.GetActive());
+           // Menu.Instance.gameObject.SetActive(!Menu.Instance.gameObject.GetActive());
         }
         
 		if (Input.GetKeyDown (KeyCode.B)) {

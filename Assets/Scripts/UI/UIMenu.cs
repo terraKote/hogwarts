@@ -27,7 +27,7 @@ public class UIMenu : MonoBehaviour {
 
 	public void togglePanel (string name) {
 		GameObject panel = (GameObject)this.GetType ().GetField (name).GetValue (this);
-		panel.SetActive (!panel.GetActive());
+		//panel.SetActive (!panel.GetActive());
 	}
 
 	public void showPanel (string name) {

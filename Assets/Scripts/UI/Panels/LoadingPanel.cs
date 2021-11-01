@@ -29,7 +29,7 @@ public class LoadingPanel : MonoBehaviour {
 			yield return null;
 		}
 		if (async.isDone) {
-			PhotonNetwork.isMessageQueueRunning = true;
+		//	PhotonNetwork.isMessageQueueRunning = true;
 		}
 	}
 }

@@ -1,32 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Mirror;
 
-public class DestroyObject : Photon.MonoBehaviour {
-	
-	public float timeOut = 10.0f;
-	public bool detachChildren = false;
-	public bool isParticle = false;
-	
-	public void Awake ()
-	{
-		if (!photonView.isMine) {
-			return;
-		}
+public class DestroyObject : NetworkBehaviour
+{
 
-		if (isParticle) {
-			ParticleSystem ps = GetComponentInChildren<ParticleSystem> ();
-			timeOut = ps.duration;
-		}
+    public float timeOut = 10.0f;
+    public bool detachChildren = false;
+    public bool isParticle = false;
 
-		Invoke ("DestroyNow", timeOut);
-	}
-	
-	public void DestroyNow ()
-	{
-		if (detachChildren) {
-			transform.DetachChildren ();
-		}
+    public void Awake()
+    {
+        //if (!photonView.isMine) {
+        //	return;
+        //}
 
-		PhotonNetwork.Destroy(gameObject);
-	}
+        if (isParticle)
+        {
+            ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+            timeOut = ps.duration;
+        }
+
+        Invoke("DestroyNow", timeOut);
+    }
+
+    public void DestroyNow()
+    {
+        if (detachChildren)
+        {
+            transform.DetachChildren();
+        }
+
+        //PhotonNetwork.Destroy(gameObject);
+    }
 }

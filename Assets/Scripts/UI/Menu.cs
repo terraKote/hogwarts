@@ -75,7 +75,7 @@ public class Menu : MonoBehaviour {
 	public void togglePanel (string name) {
 		GameObject panel = getPanel (name);
 		
-		panel.SetActive (!panel.GetActive());
+		//panel.SetActive (!panel.GetActive());
 	}
 	
 	public void hideAllPanels() {
