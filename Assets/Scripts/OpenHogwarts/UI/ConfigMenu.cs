@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityStandardAssets.CinematicEffects;
+//using UnityStandardAssets.CinematicEffects;
 using UnityEngine.SceneManagement;
 using System;
 
@@ -23,9 +23,9 @@ public class ConfigMenu : MonoBehaviour {
 
 	void LoadCfg(){
 		//ssao.isOn = Camera.main.GetComponent<SESSAO> ().enabled;
-        try {
-            dof.isOn = Camera.main.GetComponent<DepthOfField>().enabled;
-        } catch(Exception) { }
+        //try {
+        //    dof.isOn = Camera.main.GetComponent<DepthOfField>().enabled;
+        //} catch(Exception) { }
 		
 		qdrop.value = QualitySettings.GetQualityLevel ();
 	}
@@ -53,11 +53,11 @@ public class ConfigMenu : MonoBehaviour {
 	}
 
 	public void OptionsSetDOF(){
-		Camera.main.GetComponent<DepthOfField> ().enabled = dof.isOn;
+		//Camera.main.GetComponent<DepthOfField> ().enabled = dof.isOn;
 	}
 
 	public void OptionsSetBloom(){
-		Camera.main.GetComponent<Bloom> ().enabled = bloom.isOn;
+		//Camera.main.GetComponent<Bloom> ().enabled = bloom.isOn;
 	}
 
 	public void OptionsRightBar(){

@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEditor;
 using Mirror;
+using OpenHogwarts.Player;
 
 public class Player : NetworkBehaviour {
 
@@ -459,7 +460,7 @@ public class Player : NetworkBehaviour {
     }
 
     public void freeze() {
-        transform.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().enabled = false;
+        transform.GetComponent<ThirdPersonUserControl>().enabled = false;
         anim.SetBool("Jumping", false);
         anim.SetFloat("Speed", 0);
 
@@ -469,7 +470,7 @@ public class Player : NetworkBehaviour {
     }
 
     public void unfreeze() {
-        transform.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().enabled = true;
+        transform.GetComponent<ThirdPersonUserControl>().enabled = true;
     }
 
     //[PunRPC]

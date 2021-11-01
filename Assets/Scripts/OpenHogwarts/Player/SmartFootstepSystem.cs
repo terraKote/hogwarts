@@ -11,7 +11,8 @@ public class SmartFootstepSystem : MonoBehaviour {
 		public AudioClip[] sounds;
 		
 	}
-	
+	[SerializeField] private bool playSound = false;
+
 	public AudioSource footstepAudio;
 	public float groundCheckDistance = 0.25f;
 	public AudioClip baseSound;
@@ -36,7 +37,10 @@ public class SmartFootstepSystem : MonoBehaviour {
 	}
 	
 	void Update () {
-	
+
+		if (!playSound)
+			return;
+
 	    Ray ray = new Ray(transform.position + (Vector3.up * 0.1f), Vector3.down);
 		
 		//check if the character is currently on a terrain or renderer and get the tecture at that position
@@ -59,7 +63,10 @@ public class SmartFootstepSystem : MonoBehaviour {
 	}
 	
 	public void Footstep(){
-		
+
+		if (!playSound)
+			return;
+
 		bool found = false;
 		footstepAudio.volume = Random.Range (0.06f, 0.12f);
 		footstepAudio.pitch = Random.Range (0.95f, 1.05f);

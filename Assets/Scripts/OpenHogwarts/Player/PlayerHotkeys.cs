@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using OpenHogwarts.Player;
 
 public class PlayerHotkeys : MonoBehaviour
 {	
@@ -87,8 +88,8 @@ public class PlayerHotkeys : MonoBehaviour
             }
         } else {
             gameObject.GetComponent<Animator>().SetBool("Broomstick", false);
-            gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().enabled = true;
-            gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().enabled = true;
+            gameObject.GetComponent<ThirdPersonUserControl>().enabled = true;
+            gameObject.GetComponent<ThirdPersonCharacter>().enabled = true;
             gameObject.GetComponent<Rigidbody>().useGravity = true;
             gameObject.GetComponent<BroomstickControl>().enabled = false;
             broom.SetActive(!broom.activeSelf);
@@ -100,8 +101,8 @@ public class PlayerHotkeys : MonoBehaviour
 		PlayerPanel.Instance.castingPanel.Cast ("Escoba voladora", 1);
 		yield return new WaitForSeconds(1);
 		gameObject.GetComponent<Animator> ().SetBool ("Broomstick", true);
-		gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl> ().enabled = false;
-		gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter> ().enabled = false;
+		gameObject.GetComponent<ThirdPersonUserControl> ().enabled = false;
+		gameObject.GetComponent<ThirdPersonCharacter> ().enabled = false;
 		gameObject.GetComponent<Rigidbody> ().useGravity = false;
 		gameObject.GetComponent<BroomstickControl> ().enabled = true;
 		broom.SetActive (!broom.activeSelf);

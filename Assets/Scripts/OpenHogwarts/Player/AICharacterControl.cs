@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityStandardAssets.Characters.ThirdPerson
+namespace OpenHogwarts.Player
 {
     [RequireComponent(typeof (UnityEngine.AI.NavMeshAgent))]
     [RequireComponent(typeof (ThirdPersonCharacter))]
@@ -28,10 +28,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (target != null)
                 agent.SetDestination(target.position);
 
-            if (agent.remainingDistance > agent.stoppingDistance)
-                character.Move(agent.desiredVelocity, false, false);
-            else
-                character.Move(Vector3.zero, false, false);
+            //if (agent.remainingDistance > agent.stoppingDistance)
+            //    character.Move(agent.desiredVelocity, false, false);
+            //else
+            //    character.Move(Vector3.zero, false, false);
         }
 
 

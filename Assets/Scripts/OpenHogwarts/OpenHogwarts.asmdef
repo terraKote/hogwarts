@@ -1,0 +1,19 @@
+{
+    "name": "OpenHogwarts",
+    "references": [
+        "GUID:30817c1a0e6d646d99c048fc403f5979",
+        "GUID:72872094b21c16e48b631b2224833d49",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:c28f1742875306e4d8639a3bd1bbb7c8",
+        "GUID:8e27ef34feb82e8439c31222f258d07f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
